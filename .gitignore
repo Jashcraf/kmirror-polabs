@@ -3,6 +3,10 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Ignore zemax bloat
+*.zda
+*.zos
+
 # C extensions
 *.so
 

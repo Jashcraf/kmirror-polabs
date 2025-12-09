@@ -9,7 +9,7 @@ import poke.plotting as plot
 from glasses import sellmeier, S_LAH60, S_BAH27
 
 # Setup files
-path_to_files = Path.home() / "kmirror-polabs/raytrace_files"
+path_to_files = Path.home() / "Desktop/kmirror-polabs/raytrace_files"
 path_to_file = path_to_files / "SCExAO_90.zmx"
 
 # Rayfront parameters
@@ -18,10 +18,10 @@ wavelength = 0.6 # microns
 pupil_radius = 8200 / 2 # mm
 max_field_of_view = 1 # just to keep un-normalized
 
-aloc = np.array([0.0021156409, -0.0000018685, 0.9999977620])
+aloc = np.array([0.002506290, 0.9999968592, 0.0000000000])
 aloc /= np.linalg.norm(aloc)
 
-alocp = np.array([0.0021245875, -0.0370862252, 0.9993098108])
+alocp = np.array([0.0025045662, 0.999308986, 0.0370847260])
 alocp /= np.linalg.norm(alocp)
 
 exit_x = np.cross(alocp, aloc)
@@ -102,21 +102,5 @@ x0, y0 = rf.base_rays[0], rf.base_rays[1]
 
 rf.as_polarized(surflist)
 rf.trace_rayset(str(path_to_file))
-rf.compute_jones_pupil(aloc=aloc, exit_x=exit_x)
-
-#x0, y0 = rf.base_rays[0], rf.base_rays[1]
-x, y = rf.xData[0, 0], rf.yData[0, 0]
-
-plt.figure(figsize=[10, 5])
-plt.subplot(131)
-plt.title("Rays on Surface 1")
-plt.scatter(x, y)
-plt.subplot(132)
-plt.title("Base rays supplied by Poke")
-plt.scatter(x0, y0)
-plt.subplot(133)
-plt.title("What they should look like")
-plt.scatter(xx, yy)
-plt.show()
-
-#plot.jones_pupil(rf)
+rf.compute_jones_pupil(aloc=-aloc, exit_x=exit_x)
+plot.jones_pupil(rf)
